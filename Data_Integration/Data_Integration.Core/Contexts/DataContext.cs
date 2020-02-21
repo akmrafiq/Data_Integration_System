@@ -30,7 +30,14 @@ namespace Data_Integration.Core.Contexts
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-           base.OnModelCreating(builder);
+            builder.Entity<DataDetails>()
+            .Property(s => s.CreateDate)
+            .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<DataDetails>()
+             .Property(s => s.Status)
+             .HasDefaultValue("Pending");
+            base.OnModelCreating(builder);
         }
         public DbSet<DataDetails> DataDetails { get; set; }
     }
