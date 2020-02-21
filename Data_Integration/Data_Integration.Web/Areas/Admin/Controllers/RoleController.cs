@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Data_Integration.Core.Entities;
 using Data_Integration.Web.Areas.Admin.Models;
 using Data_Integration.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Data_Integration.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"),Authorize(Policy = "InternalOfficials")]
     public class RoleController : Controller
     {
         private readonly UserManager<ExtendedIdentityUser> _userManager;
