@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using Data_Integration.Core.Contexts;
+using Data_Integration.Core.Repositories;
+using Data_Integration.Core.UnitOfWorks;
 using Microsoft.Extensions.Configuration;
 using System;
 
@@ -18,24 +21,23 @@ namespace Data_Integration.Core
         }
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<StockContext>()
-            //       .WithParameter("connectionString", _connectionString)
-            //       .WithParameter("migrationAssemblyName", _migrationAssemblyName)
-            //       .InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>()
+                   .WithParameter("connectionString", _connectionString)
+                   .WithParameter("migrationAssemblyName", _migrationAssemblyName)
+                   .InstancePerLifetimeScope();
 
-            //builder.RegisterType<StockContext>().As<StockContext>()
-            //       .WithParameter("connectionString", _connectionString)
-            //       .WithParameter("migrationAssemblyName", _migrationAssemblyName)
-            //       .InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>().As<DataContext>()
+                   .WithParameter("connectionString", _connectionString)
+                   .WithParameter("migrationAssemblyName", _migrationAssemblyName)
+                   .InstancePerLifetimeScope();
 
-            //builder.RegisterType<StockUnitOfWork>().As<IStockUnitOfWork>()
-            //       .WithParameter("connectionString", _connectionString)
-            //       .WithParameter("migrationAssemblyName", _migrationAssemblyName)
-            //       .InstancePerLifetimeScope();
+            builder.RegisterType<DataUnitOfWork>().As<IDataUnitOfWork>()
+                   .WithParameter("connectionString", _connectionString)
+                   .WithParameter("migrationAssemblyName", _migrationAssemblyName)
+                   .InstancePerLifetimeScope();
 
-            //builder.RegisterType<CategoryRepository>().As<ICategoryRepository>()
-            //    .InstancePerLifetimeScope();
-          
+            builder.RegisterType<DataDetailsRepository>().As<IDataDetailsRepository>()
+                .InstancePerLifetimeScope();
 
             base.Load(builder);
         }
