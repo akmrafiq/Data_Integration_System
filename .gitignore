@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Data_Integration/Data_Integration.Core/obj
+/Data_Integration/Data_Integration.Core/bin/Debug/netcoreapp2.2
+/Data_Integration/Data_Integration.Data/bin/Debug/netcoreapp2.2
+/Data_Integration/Data_Integration.Data/obj/Debug/netcoreapp2.2
+/Data_Integration/Data_Integration.Data/obj/Debug/netcoreapp3.1
+/Data_Integration/Data_Integration.Data/obj
+/Data_Integration/Data_Integration.Web/bin/Debug/netcoreapp2.2
+/Data_Integration/Data_Integration.Web/obj
+/Data_Integration/.vs/Data_Integration/v16
+/Data_Integration/.vs/Data_Integration/config
