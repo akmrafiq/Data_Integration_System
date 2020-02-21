@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Data_Integration.Core.Entities;
 using Data_Integration.Web.Models;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace Data_Integration.Web.Controllers
@@ -93,6 +95,76 @@ namespace Data_Integration.Web.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Register(string returnUrl = null)
+        {
+            var model = new RegisterModel();
+            //model.Roles = (from r in _roleManager.Roles
+            //               select new SelectListItem
+            //               {
+            //                   Value = r.Id,
+            //                   Text = r.Name
+            //               }).ToList();
+            model.ReturnUrl = returnUrl;
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            model.ReturnUrl = model.ReturnUrl ?? Url.Content("~/admin");
+
+            if (ModelState.IsValid)
+            {
+                var user = new ExtendedIdentityUser
+                {
+                    Name = model.Name,
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    PhoneNumber = model.PhoneNumber
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var role = await _roleManager.FindByIdAsync(model.Role);
+                    var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
+                    if (roleResult.Succeeded)
+                    {
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.Action(
+                            "ConfirmEmail",
+                            "Account",
+                            values: new { userId = user.Id, code = code },
+                            protocol: Request.Scheme);
+
+
+                        await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(model.ReturnUrl);
+                    }
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        public IActionResult ConfirmEmail()
+        {
+            return View();
         }
     }
 }
