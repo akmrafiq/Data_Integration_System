@@ -101,12 +101,12 @@ namespace Data_Integration.Web.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             var model = new RegisterModel();
-            //model.Roles = (from r in _roleManager.Roles
-            //               select new SelectListItem
-            //               {
-            //                   Value = r.Id,
-            //                   Text = r.Name
-            //               }).ToList();
+            model.Roles = (from r in _roleManager.Roles
+                           select new SelectListItem
+                           {
+                               Value = r.Id,
+                               Text = r.Name
+                           }).ToList();
             model.ReturnUrl = returnUrl;
             return View(model);
         }
