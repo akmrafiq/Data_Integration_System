@@ -1,0 +1,27 @@
+﻿@model Data_Integration.Web.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<link href="~/css/Login.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <section>
+            <form id="account" method="post">
+                <div class="main">
+                    <p class="sign" align="center">JL Group</p>
+                    <h4 align="center">Sign in</h4>
+                    <input class="un" asp-for="Email" type="text" align="center" placeholder="Username">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input class="pass" asp-for="Password" type="password" align="center" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <button type="submit" class="submit " align="center">Sign in</button>
+                    <p class="forgot" align="center"><a href="#">Forgot Password?</a></p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+
