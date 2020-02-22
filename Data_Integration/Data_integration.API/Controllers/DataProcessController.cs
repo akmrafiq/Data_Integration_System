@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using Data_integration.API.Models;
 using Data_Integration.API;
+using Data_Integration.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,12 @@ namespace Data_integration.API.Controllers
     [ApiController]
     public class DataProcessController : ControllerBase
     {
+        private IDataDetailsService _dataDetailsService;
+        public DataProcessController()
+        {
+            _dataDetailsService = Startup.AutofacContainer.Resolve<IDataDetailsService>();
+        }
+
         [HttpGet]
         public async void Get(string filename, string name,string email, string phone )
         {
@@ -22,6 +30,7 @@ namespace Data_integration.API.Controllers
             dataModel.Email = email;
             dataModel.Phone = phone;
            await InsertDataAsync(dataModel);
+
         }
 
         public async Task InsertDataAsync(DataModel dataModel)

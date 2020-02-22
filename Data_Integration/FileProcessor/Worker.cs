@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3;
@@ -19,7 +20,7 @@ namespace FileProcessor
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private static string apiUrl = "http://localhost:50850/api/dataprocess";
+        private static string apiUrl = "http://localhost:50850/api/";
         private static string authirizeToken;
         public Worker(ILogger<Worker> logger)
         {
@@ -30,14 +31,17 @@ namespace FileProcessor
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //var message = "";
-                //if (string.IsNullOrEmpty(authirizeToken))
-                //    Login();
-               
-                //if (!string.IsNullOrEmpty(authirizeToken))
-                //{
-                //    message = CheckingFileStatus();
-                //}
+                var message = "";
+                if (string.IsNullOrEmpty(authirizeToken))
+                    Login();
+
+                if (!string.IsNullOrEmpty(authirizeToken))
+                {
+                    message = CheckingFileStatus();
+                }
+
+                //var Data = JsonSerializer.Deserialize<DataDetailsHelper>(message);
+
 
                 var fileName = "egf41mhgclk.csv";
                 var s3Client = new AmazonS3Client();
@@ -76,7 +80,7 @@ namespace FileProcessor
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authirizeToken);
-            var authorizedResponse = client.GetAsync(apiUrl).Result;
+            var authorizedResponse = client.GetAsync(apiUrl+"data").Result;
             var result = authorizedResponse.Content.ReadAsStringAsync().Result;
             return result;
         }
@@ -97,7 +101,7 @@ namespace FileProcessor
         {
             try
             {
-                var result = ""; dynamic item = "";
+                var result = "";
                 var request = WebRequest.Create(apiUrl + "token?username=" + username + "&password=" + password + "");
                 request.Method = "GET";
                 request.ContentType = "application/json";
@@ -122,7 +126,7 @@ namespace FileProcessor
             try
             {
                 var result = "";
-                var request = WebRequest.Create(apiUrl + "?filename="+ filename+ "&name="+name+ "&email=" + email + "&phone=" + phone);
+                var request = WebRequest.Create(apiUrl + "dataprocess?filename=" + filename+ "&name="+name+ "&email=" + email + "&phone=" + phone);
                 request.Method = "GET";
                 request.ContentType = "application/json";
                 using (var response = request.GetResponse())
