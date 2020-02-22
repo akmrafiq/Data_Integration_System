@@ -9,25 +9,32 @@ namespace Data_Integration.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ExtendedIdentityUser>
     {
-        private string _connectionString;
-        private string _migrationAssemblyName;
-
-        public ApplicationDbContext(string connectionString, string migrationAssemblyName)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            _connectionString = connectionString;
-            _migrationAssemblyName = migrationAssemblyName;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
-        {
-            if (!dbContextOptionsBuilder.IsConfigured)
-            {
-                dbContextOptionsBuilder.UseSqlServer(
-                    _connectionString,
-                    m => m.MigrationsAssembly(_migrationAssemblyName));
-            }
-
-            base.OnConfiguring(dbContextOptionsBuilder);
         }
     }
+    //public class ApplicationDbContext : IdentityDbContext<ExtendedIdentityUser>
+    //{
+    //    private string _connectionString;
+    //    private string _migrationAssemblyName;
+
+    //    public ApplicationDbContext(string connectionString, string migrationAssemblyName)
+    //    {
+    //        _connectionString = connectionString;
+    //        _migrationAssemblyName = migrationAssemblyName;
+    //    }
+
+    //    protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
+    //    {
+    //        if (!dbContextOptionsBuilder.IsConfigured)
+    //        {
+    //            dbContextOptionsBuilder.UseSqlServer(
+    //                _connectionString,
+    //                m => m.MigrationsAssembly(_migrationAssemblyName));
+    //        }
+
+    //        base.OnConfiguring(dbContextOptionsBuilder);
+    //    }
+    //}
 }

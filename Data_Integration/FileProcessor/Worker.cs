@@ -115,7 +115,7 @@ namespace FileProcessor
             {
                 var result = "";
                 var request = WebRequest.Create(apiUrl + "dataModel="+cSVHelper);
-                request.Method = "POST";
+                request.Method = "GET";
                 request.ContentType = "application/json";
                 using (var response = request.GetResponse())
                 {

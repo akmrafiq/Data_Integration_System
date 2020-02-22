@@ -13,8 +13,8 @@ namespace Data_integration.API.Controllers
     [ApiController]
     public class DataProcessController : ControllerBase
     {
-        [HttpPost]
-        public async void Post([FromBody] DataModel dataModel)
+        [HttpGet]
+        public async void Get(DataModel dataModel)
         {
            await InsertDataAsync(dataModel);
         }
