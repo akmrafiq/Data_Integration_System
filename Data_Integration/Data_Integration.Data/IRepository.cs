@@ -17,5 +17,6 @@ namespace Data_Integration.Data
         void Remove(Expression<Func<T, bool>> filter);
         void Remove(int id);
         void Remove(T entityToDelete);
+        IEnumerable<T> GetAll();
     }
 }

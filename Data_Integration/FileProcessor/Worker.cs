@@ -20,8 +20,7 @@ namespace FileProcessor
     {
         private readonly ILogger<Worker> _logger;
         private static string apiUrl = "http://localhost:50850/api/dataprocess";
-        private static string token;
-        private static readonly HttpClient client = new HttpClient();
+        private static string authirizeToken;
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
@@ -31,6 +30,15 @@ namespace FileProcessor
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                //var message = "";
+                //if (string.IsNullOrEmpty(authirizeToken))
+                //    Login();
+               
+                //if (!string.IsNullOrEmpty(authirizeToken))
+                //{
+                //    message = CheckingFileStatus();
+                //}
+
                 var fileName = "egf41mhgclk.csv";
                 var s3Client = new AmazonS3Client();
                 
@@ -67,8 +75,8 @@ namespace FileProcessor
         public string CheckingFileStatus()
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var authorizedResponse = client.GetAsync(apiUrl + "File").Result;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authirizeToken);
+            var authorizedResponse = client.GetAsync(apiUrl).Result;
             var result = authorizedResponse.Content.ReadAsStringAsync().Result;
             return result;
         }
@@ -77,8 +85,8 @@ namespace FileProcessor
         {
             try
             {
-                token = null;
-                token = GetTokens("kay@gmail.com", "Rafiq@123");
+                authirizeToken = null;
+                authirizeToken = GetTokens("kay@gmail.com", "Rafiq@123");
             }
             catch (Exception ex)
             {

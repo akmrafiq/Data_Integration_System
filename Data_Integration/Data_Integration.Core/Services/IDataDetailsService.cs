@@ -17,5 +17,6 @@ namespace Data_Integration.Core.Services
         DataDetails GetDataDetail(int id);
         void EditDataDetails(DataDetails dataDetails);
         void DeleteDataDetails(int id);
+        IEnumerable<DataDetails> DataDetailsList();
     }
 }

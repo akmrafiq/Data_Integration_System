@@ -23,6 +23,11 @@ namespace Data_Integration.Core.Services
             _dataUnitOfWork.Save();
         }
 
+        public IEnumerable<DataDetails> DataDetailsList()
+        {
+            return _dataUnitOfWork.DataDetailsRepository.GetAll();
+        }
+
         public void DeleteDataDetails(int id)
         {
             _dataUnitOfWork.DataDetailsRepository.Remove(id);

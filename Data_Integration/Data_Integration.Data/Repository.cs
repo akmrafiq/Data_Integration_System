@@ -95,6 +95,11 @@ namespace Data_Integration.Data
                 return result?.ToList();
         }
 
+        public IEnumerable<T> GetAll()
+        {
+            return _dbSet.AsNoTracking().ToList();
+        }
+
         public virtual T GetById(int id)
         {
             return _dbSet.Find(id);
