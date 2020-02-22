@@ -12,3 +12,7 @@
 /Data_Integration/Data_Integration.Web/obj
 /Data_Integration/.vs/Data_Integration/v16
 /Data_Integration/.vs/Data_Integration/config
+/Data_Integration/Data_integration.API/bin/Debug/netcoreapp2.2
+/Data_Integration/Data_integration.API/obj
+/Data_Integration/FileProcessor/bin/Debug/netcoreapp2.2
+/Data_Integration/FileProcessor/obj
