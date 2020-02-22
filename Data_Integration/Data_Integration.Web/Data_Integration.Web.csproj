@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="AWSSDK.Core" Version="3.3.104.27" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.110.25" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
@@ -22,6 +23,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Data_Integration.Core\Data_Integration.Core.csproj" />
     <ProjectReference Include="..\Data_Integration.Data\Data_Integration.Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="upload\" />
   </ItemGroup>
 
 </Project>

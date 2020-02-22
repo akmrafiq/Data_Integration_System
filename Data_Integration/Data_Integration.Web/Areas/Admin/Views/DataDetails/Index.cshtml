@@ -1,0 +1,89 @@
+﻿@model Data_Integration.Web.Areas.Admin.Models.DataDetailsViewModel
+@{
+    ViewData["Title"] = "File Index";
+}
+
+@section styles
+{
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+}
+
+@section scripts
+{
+    <!-- DataTables -->
+    <script src="/admin/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "/Admin/DataDetails/GetDataDetails",
+                "columnDefs": [
+                    {
+                        "orderable": false,
+                        "targets": 0,
+                        "render": function (data, type, row) {
+                            return `<input type='checkbox' value='${data}'/>`;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "targets": 3,
+                        "render": function (data, type, row) {
+                            return `<button type="submit" class="btn btn-info btn-sm" onclick="window.location.href='/admin/category/edit/${data}'" value='${data}'>
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                                View Details
+                                            </button>`;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+@*@section notification
+    {
+        @await Html.PartialAsync("_Notification", Model.Notification)
+    }*@
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Categories</h3>
+            </div>
+            <br />
+            <form enctype="multipart/form-data" method="post" style="margin-left:20px;">
+                <dl>
+                    <dd>
+                        <input name="dataFile" type="file">
+                    </dd>
+                </dl>
+                <input class="btn btn-primary" type="submit" value="Upload" />
+            </form>
+            <br />
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" /></th>
+                            <th>File Name</th>
+                            <th>Create Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->

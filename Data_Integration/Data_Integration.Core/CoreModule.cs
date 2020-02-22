@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Data_Integration.Core.Contexts;
 using Data_Integration.Core.Repositories;
+using Data_Integration.Core.Services;
 using Data_Integration.Core.UnitOfWorks;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -38,6 +39,8 @@ namespace Data_Integration.Core
 
             builder.RegisterType<DataDetailsRepository>().As<IDataDetailsRepository>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<DataDetailsService>().As<IDataDetailsService>()
+              .InstancePerLifetimeScope();
 
             base.Load(builder);
         }
