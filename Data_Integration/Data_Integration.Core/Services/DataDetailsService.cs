@@ -37,7 +37,7 @@ namespace Data_Integration.Core.Services
         public void EditDataDetails(DataDetails dataDetails)
         {
             var oldData = _dataUnitOfWork.DataDetailsRepository.GetById(dataDetails.Id);
-            oldData.Status = oldData.Status;
+            oldData.Status = dataDetails.Status;
             _dataUnitOfWork.Save();
         }
 
