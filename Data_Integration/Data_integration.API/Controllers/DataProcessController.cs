@@ -14,7 +14,12 @@ namespace Data_integration.API.Controllers
     public class DataProcessController : ControllerBase
     {
         [HttpPost]
-        public async Task DataProcess([FromBody]DataModel dataModel)
+        public async void Post([FromBody] DataModel dataModel)
+        {
+           await InsertDataAsync(dataModel);
+        }
+
+        public async Task InsertDataAsync(DataModel dataModel)
         {
             var dbHelper = new DynamoDbHelper();
             await dbHelper.Insert(new DbInsertItem

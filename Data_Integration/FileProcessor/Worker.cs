@@ -19,7 +19,7 @@ namespace FileProcessor
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private static string apiUrl = "http://localhost:50850/api/";
+        private static string apiUrl = "http://localhost:50850/api/dataprocess";
         private static string token;
         private static readonly HttpClient client = new HttpClient();
         public Worker(ILogger<Worker> logger)
@@ -114,7 +114,7 @@ namespace FileProcessor
             try
             {
                 var result = "";
-                var request = WebRequest.Create(apiUrl + "DataProcess?dataModel="+cSVHelper);
+                var request = WebRequest.Create(apiUrl + "dataModel="+cSVHelper);
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 using (var response = request.GetResponse())
