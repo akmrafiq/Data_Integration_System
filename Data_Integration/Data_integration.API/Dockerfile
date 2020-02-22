@@ -6,7 +6,7 @@ WORKDIR /src
 COPY ["Data_Integration.Core/*.csproj","Data_Integration.Core/"]
 COPY ["Data_Integration.Web/*.csproj","Data_Integration.Web/"]
 COPY ["Data_Integration.Data/*.csproj","Data_Integration.Data/"]
-COPY ["Data_integration.Data/*.csproj","Data_integration.Data/"]
+COPY ["Data_integration.API/*.csproj","Data_integration.API/"]
 RUN dotnet restore "Data_integration.API/Data_integration.API.csproj"
 COPY . .
 WORKDIR "/src/Data_integration.API"
