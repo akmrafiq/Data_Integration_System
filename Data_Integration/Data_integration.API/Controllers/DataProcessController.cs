@@ -14,8 +14,13 @@ namespace Data_integration.API.Controllers
     public class DataProcessController : ControllerBase
     {
         [HttpGet]
-        public async void Get(DataModel dataModel)
+        public async void Get(string filename, string name,string email, string phone )
         {
+            var dataModel = new DataModel();
+            dataModel.FileName = filename;
+            dataModel.Name = name;
+            dataModel.Email = email;
+            dataModel.Phone = phone;
            await InsertDataAsync(dataModel);
         }
 

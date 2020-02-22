@@ -57,7 +57,7 @@ namespace FileProcessor
                         dataList.Email = data[1];
                         dataList.Phone = data[2];
 
-                        SendData(dataList);
+                        SendData(dataList.FileName,dataList.Name,dataList.Email,dataList.Phone);
                     }
                 }
                 
@@ -109,18 +109,18 @@ namespace FileProcessor
 
         }
 
-        public string SendData(CSVHelper cSVHelper)
+        public string SendData(string filename, string name, string email, string phone)
         {
             try
             {
                 var result = "";
-                var request = WebRequest.Create(apiUrl + "dataModel="+cSVHelper);
+                var request = WebRequest.Create(apiUrl + "?filename="+ filename+ "&name="+name+ "&email=" + email + "&phone=" + phone);
                 request.Method = "GET";
                 request.ContentType = "application/json";
                 using (var response = request.GetResponse())
                 {
                     using (var streamItem = response.GetResponseStream())
-                    {
+                    {  
                         using (var reader = new StreamReader(streamItem))
                         {
                             result = reader.ReadToEnd();
